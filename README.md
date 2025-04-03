@@ -34,8 +34,9 @@ Base iOS Webview Project (using tuist, UIKit)
 ### 2️⃣ 템플릿 프로젝트 생성
 1. **템플릿을 클론합니다.**
    ```sh
-   git clone https://github.com/your-org/ios-template.git MyNewProject
-   cd MyNewProject
+   git clone https://github.com/wnsdud12/iOS-base-webview.git 사용할프로젝트명 // 사용할 프로젝트명으로 폴더명을 변경
+   cd 사용할프로젝트명
+   rm -rf .git // 깃 제거
    ```
 2. **프로젝트 이름 변경**
    - `Project.swift`에서 `name` 값을 원하는 프로젝트 이름으로 수정합니다.
@@ -53,5 +54,19 @@ Base iOS Webview Project (using tuist, UIKit)
    tuist edit
    ```
 
-이제 Tuist 기반으로 iOS 프로젝트를 빠르게 시작할 수 있습니다! 🚀
+### 3️⃣ 오류 발생 시 대처 방법
 
+1. mise 신뢰 경고
+
+오류 메시지 예시
+```
+mise WARN  Config files in ~/path/to/your/project/mise.toml are not trusted.
+Trust them with `mise trust`. See https://mise.jdx.dev/cli/trust.html for more information.
+```
+해결 방법
+```zsh
+mise trust
+```
+추후 다른 오류 발생 시 해당 섹션을 업데이트하여 해결 방법을 추가할 예정입니다.
+
+###
