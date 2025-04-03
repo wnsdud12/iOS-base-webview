@@ -1,14 +1,14 @@
 //
-//  ViewController.swift
+//  SplashViewController.swift
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+class SplashViewController: UIViewController {
 
     let label: UILabel = {
         let _label = UILabel()
-        _label.text = "Main"
+        _label.text = "Splash"
         _label.textAlignment = .center
         _label.font = .systemFont(ofSize: 16)
         _label.textColor = .black
@@ -20,6 +20,12 @@ class ViewController: UIViewController {
         setLayout()
         // Do any additional setup after loading the view.
     }
+    override func viewWillAppear(_ animated: Bool) {
+        let nextVC = ViewController()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+          self.navigationController?.setViewControllers([nextVC], animated: true)
+        }
+    }
     private func setLayout() {
         view.backgroundColor = .white
         
@@ -28,6 +34,14 @@ class ViewController: UIViewController {
         label.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
         label.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
     }
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
 
 }
-
