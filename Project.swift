@@ -1,13 +1,17 @@
 import ProjectDescription
 
+// 🔹 변수 정의
+let projectName = "WebviewBase"
+let bundleId = "com.template.\(projectName.lowercased())"
+
 let project = Project(
-    name: "WebviewBase",
+    name: projectName,
     targets: [
         .target(
-            name: "WebviewBase",
+            name: projectName,
             destinations: .iOS,
             product: .app,
-            bundleId: "io.tuist.WebviewBase",
+            bundleId: bundleId,
             infoPlist: .extendingDefault(
                 with: [
                     "UIApplicationSceneManifest": [
@@ -20,22 +24,23 @@ let project = Project(
                                 ]
                             ]
                         ]
-                    ]
+                    ],
+                    "UIMainStoryboardFile": "" // ✅ 스토리보드 제거
                 ]
             ),
-            sources: ["WebviewBase/Sources/**"],
-            resources: ["WebviewBase/Resources/**"],
+            sources: ["\(projectName)/Sources/**"],
+            resources: ["\(projectName)/Resources/**"],
             dependencies: []
         ),
         .target(
-            name: "WebviewBaseTests",
+            name: "\(projectName)Tests",
             destinations: .iOS,
             product: .unitTests,
-            bundleId: "io.tuist.WebviewBaseTests",
+            bundleId: "\(bundleId)Tests",
             infoPlist: .default,
-            sources: ["WebviewBase/Tests/**"],
+            sources: ["\(projectName)/Tests/**"],
             resources: [],
-            dependencies: [.target(name: "WebviewBase")]
+            dependencies: [.target(name: projectName)]
         ),
     ]
 )
