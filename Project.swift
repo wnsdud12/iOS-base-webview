@@ -30,7 +30,9 @@ let project = Project(
             ),
             sources: ["\(projectName)/Sources/**"],
             resources: ["\(projectName)/Resources/**"],
-            dependencies: []
+            dependencies: [
+                .external(name: "Alamofire")
+            ]
         ),
         .target(
             name: "\(projectName)Tests",
