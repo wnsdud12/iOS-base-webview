@@ -14,6 +14,7 @@ let project = Project(
             bundleId: bundleId,
             infoPlist: .extendingDefault(
                 with: [
+                    "UILaunchStoryboardName": "LaunchScreen.storyboard",
                     "UIApplicationSceneManifest": [
                         "UIApplicationSupportsMultipleScenes": false,
                         "UISceneConfigurations": [
@@ -21,11 +22,10 @@ let project = Project(
                                 [
                                     "UISceneConfigurationName": "Default Configuration",
                                     "UISceneDelegateClassName": "$(PRODUCT_MODULE_NAME).SceneDelegate"
-                                ]
+                                ],
                             ]
                         ]
                     ],
-                    "UIMainStoryboardFile": "" // ✅ 스토리보드 제거
                 ]
             ),
             sources: ["\(projectName)/Sources/**"],
