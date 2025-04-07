@@ -50,6 +50,9 @@ class ViewController: UIViewController {
     }
     // 레이아웃 세팅
     private func setLayout() {
+        view.backgroundColor = .white
+        mainWebView.backgroundColor = .white
+        mainWebView.scrollView.backgroundColor = .white
         // 1. Add subviews
         view.addSubview(navBar)
         navBar.addSubview(closeButton)
