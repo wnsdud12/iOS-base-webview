@@ -121,7 +121,7 @@ class ViewController: UIViewController {
         //    contentController.add(self, name: "consoleLog")
         // TODO: Xcode 콘솔에 console.log 출력 (필요시) - end
         
-        
+        contentController.add(self, name: "downloadFile")
         webConfiguration.userContentController = contentController
         
         mainWebView = WKWebView(frame: .zero, configuration: webConfiguration)
@@ -312,7 +312,7 @@ extension ViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         
         let name = message.name
-        let body = message.body as? String
+        let body = message.body
         
         // TODO: Xcode 콘솔에 console.log 출력 (필요시) - start
         //    if message.name == "consoleLog", let log = message.body as? String {
@@ -320,5 +320,58 @@ extension ViewController: WKScriptMessageHandler {
         //      print("JavaScript Console: \(log)")
         //    }
         // TODO: Xcode 콘솔에 console.log 출력 (필요시) - end
+        
+        print("message name: \(name)")
+//        print("message body: \(body)")
+        
+        switch name {
+        case "downloadFile":
+            guard let body = message.body as? [String: Any] else {
+                print("body is nil")
+                return
+            }
+             handleDownloadFile(body: body)
+        default:
+            return;
+        }
     }
+    
+    func handleDownloadFile(body: [String: Any]) {
+        guard let fileName = body["fileName"] as? String,
+              let base64 = body["base64"] as? String else {
+            print("⚠️ 잘못된 데이터")
+            return
+        }
+
+        // base64에서 'data:*/*;base64,' 앞부분 제거
+        guard let commaIndex = base64.firstIndex(of: ",") else { return }
+        let pureBase64 = String(base64[base64.index(after: commaIndex)...])
+
+        // base64 → Data
+        guard let fileData = Data(base64Encoded: pureBase64) else {
+            print("⚠️ base64 디코딩 실패")
+            return
+        }
+
+        // 임시 디렉토리에 파일 저장
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+        do {
+            try fileData.write(to: tempURL)
+        } catch {
+            print("⚠️ 파일 저장 실패:", error)
+            return
+        }
+
+        // UIActivityViewController 표시 (공유 또는 저장)
+        let activityVC = UIActivityViewController(activityItems: [tempURL], applicationActivities: nil)
+        activityVC.excludedActivityTypes = [.addToReadingList] // 필요 시 제외 옵션
+
+        DispatchQueue.main.async {
+            if let topVC = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController {
+                topVC.present(activityVC, animated: true)
+            }
+        }
+    }
+
 }
+

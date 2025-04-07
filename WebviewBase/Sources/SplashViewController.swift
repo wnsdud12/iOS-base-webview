@@ -22,7 +22,8 @@ class SplashViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         let nextVC = ViewController()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        // splash를 1초 보여준 후 메인화면(웹뷰)으로 이동
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
           self.navigationController?.setViewControllers([nextVC], animated: true)
         }
     }
